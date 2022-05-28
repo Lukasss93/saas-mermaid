@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build",
+    "module": "commonjs",
+    "target": "es2017",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "sourceMap": true,
+    "allowJs": false,
+    "noUnusedLocals": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": false,
+    "pretty": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "preserveConstEnums": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
