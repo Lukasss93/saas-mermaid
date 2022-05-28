@@ -7,4 +7,6 @@ router.get('/', Service.home);
 
 router.get('/mermaid', Service.mermaid);
 
+router.post('/generate', Service.generate);
+
 export default router;
