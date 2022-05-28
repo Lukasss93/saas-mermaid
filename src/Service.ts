@@ -32,6 +32,11 @@ export let generate = async function (req: Request, res: Response) {
         //check if file exists
         const filePath = `${__dirname}/../cache/${hash}.svg`;
 
+        //create cache directory if it doesn't exist
+        if (!fs.existsSync(`${__dirname}/../cache`)) {
+            fs.mkdirSync(`${__dirname}/../cache`);
+        }
+        
         //if file not exists, generate it
         if (!fs.existsSync(filePath)) {
             fs.writeFileSync(filePath, await mermaidTools.render());
