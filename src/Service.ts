@@ -2,6 +2,10 @@ import {Request, Response} from "express";
 import fs from "fs";
 import md5 from "md5";
 import Mermaider from "./Mermaider";
+import dotenv from "dotenv";
+
+dotenv.config();
+const cacheTtl: Number = Number(process.env.CACHE_TTL) || 86400;
 
 export let home = function (req: Request, res: Response) {
     res.send('SERVICE IS UP');
@@ -55,4 +59,25 @@ export let generate = async function (req: Request, res: Response) {
         console.log(message);
         res.status(422).send(message);
     }
+};
+
+export let cleanCache = async function () {
+    console.log('Cleaning cache...');
+
+    const currentTime = new Date();
+
+    const files = fs.readdirSync(`${__dirname}/../cache`);
+    files.forEach((file) => {
+        const filePath = `${__dirname}/../cache/${file}`;
+        const fileCreationTime = fs.statSync(filePath).ctime;
+        const diff = (currentTime.getTime() - fileCreationTime.getTime()) / 1000;
+        if (diff > cacheTtl) {
+            fs.unlinkSync(filePath);
+            console.log(`${filePath} => expired`);
+        } else {
+            console.log(`${filePath} => cached`);
+        }
+    });
+
+    console.log('Cache cleaned');
 };
