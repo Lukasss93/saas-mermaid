@@ -31,12 +31,11 @@ export let generate = async function (req: Request, res: Response) {
         const mermaider = new Mermaider(data);
         
         //enable/disable background
-        if (req.query.background === 'false') {
-            mermaider.setBackground(false);
-        }
+        const background: boolean = req.query.background !== 'false';
+        mermaider.setBackground(background);
 
         //generate md5 from data
-        const hash = md5(data);
+        const hash = md5(data+background);
 
         //check if file exists
         const filePath = `${__dirname}/../cache/${hash}.svg`;
