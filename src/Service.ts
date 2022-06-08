@@ -28,7 +28,12 @@ export let generate = async function (req: Request, res: Response) {
         }
 
         //initialize mermaid tools
-        const mermaidTools = new Mermaider(data);
+        const mermaider = new Mermaider(data);
+        
+        //enable/disable background
+        if (req.query.background === 'false') {
+            mermaider.setBackground(false);
+        }
 
         //generate md5 from data
         const hash = md5(data);
@@ -43,7 +48,7 @@ export let generate = async function (req: Request, res: Response) {
         
         //if file not exists, generate it
         if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, await mermaidTools.render());
+            fs.writeFileSync(filePath, await mermaider.render());
         }
 
         //read file
