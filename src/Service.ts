@@ -59,9 +59,8 @@ export let generate = async function (req: Request, res: Response) {
             .type('image/svg+xml')
             .send(file);
     } catch (e: any) {
-        let message = e.message.substring(0, e.message.indexOf('at ')).trim();
-        console.log(message);
-        res.status(422).send(message);
+        console.log(e.message);
+        res.status(422).send(e.message);
     }
 };
 

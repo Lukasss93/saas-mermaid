@@ -57,18 +57,29 @@ export default class Mermaider {
     }
 
     public async render(): Promise<string> {
-        return await this.init(function (text, config, background) {
-            // @ts-ignore
-            window.mermaid.initialize(config);
+        try {
+            return await this.init(function (text, config, background) {
+                // @ts-ignore
+                window.mermaid.initialize(config);
 
-            // @ts-ignore
-            let result:string = window.mermaid.mermaidAPI.render('id1', text);
-            
-            if(background){
-                result = result.replace('<style>','<style>#id1{background:white;} ');
-            }
-            
-            return result;
-        }, this.text, this.config, this.background);
+                // @ts-ignore
+                let result: string = window.mermaid.mermaidAPI.render('id1', text);
+
+                if (background) {
+                    result = result.replace('<style>', '<style>#id1{background:white;} ');
+                }
+
+                return result;
+            }, this.text, this.config, this.background);
+        } catch (e:any) {
+            let message = e.message.substring(0, e.message.indexOf('at ')).trim();
+            throw new MermaidError(message);
+        }
+    }
+}
+
+export class MermaidError extends Error {
+    constructor(message: string) {
+        super(message);
     }
 }
