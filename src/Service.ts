@@ -29,7 +29,7 @@ export let generate = async function (req: Request, res: Response) {
 
         //initialize mermaid tools
         const mermaider = new Mermaider(data);
-        
+
         //enable/disable background
         const background: boolean = req.query.background !== 'false';
         mermaider.setBackground(background);
@@ -69,8 +69,9 @@ export let generate = async function (req: Request, res: Response) {
             .status(200)
             .type('image/svg+xml')
             .send(file);
+        
     } catch (e: any) {
-        console.log(e.message);
+        console.log(e);
         res.status(422).send(e.message);
     }
 };
@@ -80,7 +81,7 @@ export let cleanCache = async function () {
     if (!fs.existsSync(`${__dirname}/../cache`)) {
         return;
     }
-    
+
     console.log('Cleaning cache...');
 
     const currentTime = new Date();

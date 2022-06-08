@@ -1,8 +1,11 @@
 FROM node:alpine
 
+RUN apk update
+
+# install chromium
 RUN apk add --no-cache chromium
 
-# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+# tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 

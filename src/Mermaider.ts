@@ -72,6 +72,7 @@ export default class Mermaider {
                 return result;
             }, this.text, this.config, this.background);
         } catch (e:any) {
+            console.log(e);
             let message = e.message.substring(0, e.message.indexOf('at ')).trim();
             throw new MermaidError(message);
         }
