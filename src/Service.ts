@@ -44,6 +44,17 @@ export let generate = async function (req: Request, res: Response) {
         if (!fs.existsSync(`${__dirname}/../cache`)) {
             fs.mkdirSync(`${__dirname}/../cache`);
         }
+
+        //delete cache file after ttl
+        if (fs.existsSync(filePath)) {
+            const fileCreationTime = fs.statSync(filePath).ctime;
+            const currentTime = new Date();
+            const diff = (currentTime.getTime() - fileCreationTime.getTime()) / 1000;
+
+            if(diff > cacheTtl) {
+                fs.unlinkSync(filePath);
+            }
+        }
         
         //if file not exists, generate it
         if (!fs.existsSync(filePath)) {
