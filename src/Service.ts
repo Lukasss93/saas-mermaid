@@ -62,6 +62,11 @@ export let generate = async function (req: Request, res: Response) {
 };
 
 export let cleanCache = async function () {
+    //create cache directory if it doesn't exist
+    if (!fs.existsSync(`${__dirname}/../cache`)) {
+        return;
+    }
+    
     console.log('Cleaning cache...');
 
     const currentTime = new Date();
