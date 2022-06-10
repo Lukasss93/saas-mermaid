@@ -3,6 +3,7 @@ import fs from "fs";
 import md5 from "md5";
 import Mermaider from "./Mermaider";
 import dotenv from "dotenv";
+import {formats, MermaidFormat} from "./Formats";
 
 dotenv.config();
 const cacheTtl: Number = Number(process.env.CACHE_TTL) || 86400;
@@ -33,12 +34,20 @@ export let generate = async function (req: Request, res: Response) {
         //enable/disable background
         const background: boolean = req.query.background !== 'false';
         mermaider.setBackground(background);
-
+        
+        //set format
+        const ext: string = String(req.query.format || 'svg').toLowerCase();
+        const format:MermaidFormat|undefined = formats.find(x => x.extension === ext);
+        if (format === undefined) {
+            throw new Error(`Format ${ext} is not supported`);
+        }
+        mermaider.setFormat(format.extension);
+        
         //generate md5 from data
-        const hash = md5(data+background);
+        const hash = md5(data+background+ext);
 
         //check if file exists
-        const filePath = `${__dirname}/../cache/${hash}.svg`;
+        const filePath = `${__dirname}/../cache/${hash}`;
 
         //create cache directory if it doesn't exist
         if (!fs.existsSync(`${__dirname}/../cache`)) {
@@ -67,7 +76,8 @@ export let generate = async function (req: Request, res: Response) {
         //send response
         res
             .status(200)
-            .type('image/svg+xml')
+            .type(format.mime)
+            .setHeader('X-Hash', hash)
             .send(file);
         
     } catch (e: any) {
