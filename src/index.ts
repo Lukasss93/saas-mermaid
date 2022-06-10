@@ -15,6 +15,17 @@ const app: Express = express();
 app.use(morgan('combined'));
 app.use(bodyParser.text());
 app.use('/', routes);
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
+
+const shutdown = () => {
+    console.log('Shutting down...');
+    server.close(() => {
+        console.log('HTTP server closed.');
+        process.exit(0);
+    });
+}
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
