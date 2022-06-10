@@ -9,6 +9,9 @@
 - `/generate?background=false` to remove background
 - `/generate?format=svg` to change format (supported: svg, png, jpg)
 
+### Usage
+https://mermaid-js.github.io/mermaid/
+
 ### Docker
 ```bash
 docker run -p 8087:8087 lukasss93/saas-mermaid
