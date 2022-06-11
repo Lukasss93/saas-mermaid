@@ -3,7 +3,7 @@ import fs from "fs";
 import md5 from "md5";
 import Mermaider from "./Mermaider";
 import {formats, MermaidFormat} from "./Formats";
-import config from "./Config";
+import config from "./config";
 
 export let home = function (req: Request, res: Response) {
     res.send(`SERVICE IS UP<br>${config.app.name} v${config.app.version}`);
