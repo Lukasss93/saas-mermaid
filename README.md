@@ -19,7 +19,7 @@ docker run -p 8087:8087 lukasss93/saas-mermaid
 
 ## 👓 Usage
 
-Send a <img src="https://img.shields.io/badge/-GET-blue" style="vertical-align:middle;"/> or <img src="https://img.shields.io/badge/-POST-red" style="vertical-align:middle;"/> request to `http://localhost:8087/render` endpoint with the following parameters:
+Send a <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> or <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> request to `http://localhost:8087/render` endpoint with the following parameters:
 
 | Query Parameter | Available in                                                                                   | Default | Allowed values      | Description                                                                     |
 |-----------------|------------------------------------------------------------------------------------------------|---------|---------------------|---------------------------------------------------------------------------------|
@@ -27,7 +27,7 @@ Send a <img src="https://img.shields.io/badge/-GET-blue" style="vertical-align:m
 | background      | ![GET](https://img.shields.io/badge/-GET-blue) ![POST](https://img.shields.io/badge/-POST-red) | `true`  | `true`, `false`     | Optional. Enable/disable the white background (not available when `format=jpg`) |
 | format          | ![GET](https://img.shields.io/badge/-GET-blue) ![POST](https://img.shields.io/badge/-POST-red) | `svg`   | `svg`, `png`, `jpg` | Optional. Change the output image format                                        |
 
-⚠️ When using the <img src="https://img.shields.io/badge/-POST-red" style="vertical-align:middle;"/> method, you need to send the **chart text** as plain body. 
+⚠️ When using the <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> method, you need to send the **chart text** as plain body. 
 
 ### 📊 Diagram Syntax
 The chart text must be a valid Mermaid diagram.<br/>
