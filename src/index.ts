@@ -1,12 +1,9 @@
 import express, {Express} from "express";
-import dotenv from "dotenv";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import routes from "./routes";
 import * as Service from "./Service";
-
-dotenv.config();
-const port: Number = Number(process.env.PORT) || 8087;
+import config from "./config";
 
 Service.cleanCache();
 setInterval(Service.cleanCache, 1000 * 60 * 60);
@@ -15,8 +12,8 @@ const app: Express = express();
 app.use(morgan('combined'));
 app.use(bodyParser.text());
 app.use('/', routes);
-const server = app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+const server = app.listen(config.server.port, () => {
+    console.log(`${config.app.name} v${config.app.version} server is running at http://localhost:${config.server.port}`);
 });
 
 const shutdown = () => {

@@ -1,18 +1,17 @@
 import puppeteer from 'puppeteer';
 import {AllowedFormats} from "./Formats";
 import MermaidError from "./MermaidError";
-
-const port: Number = Number(process.env.PORT) || 8087;
+import config from "./config";
 
 export default class Mermaider {
     protected text: string;
-    protected config: any;
+    protected mermaidConfig: any;
     protected background: boolean;
     protected format: AllowedFormats;
 
     constructor(text: string) {
         this.text = text;
-        this.config = {};
+        this.mermaidConfig = {};
         this.background = true;
         this.format = 'svg';
     }
@@ -76,7 +75,7 @@ export default class Mermaider {
             //load mermaid
             let renderPage = await browser.newPage();
             await renderPage.goto(
-                `data:text/html,<script src="http://localhost:${port}/mermaid"></script>`
+                `data:text/html,<script src="http://localhost:${config.server.port}/mermaid"></script>`
             );
 
             //render svg
@@ -133,7 +132,7 @@ export default class Mermaider {
                 }
 
                 return result;
-            }, this.text, this.config, this.background);
+            }, this.text, this.mermaidConfig, this.background);
         } catch (e: any) {
             console.log(e);
             let message = e.message.substring(0, e.message.indexOf('at ')).trim();

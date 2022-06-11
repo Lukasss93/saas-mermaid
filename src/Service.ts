@@ -2,14 +2,11 @@ import {Request, Response} from "express";
 import fs from "fs";
 import md5 from "md5";
 import Mermaider from "./Mermaider";
-import dotenv from "dotenv";
 import {formats, MermaidFormat} from "./Formats";
-
-dotenv.config();
-const cacheTtl: Number = Number(process.env.CACHE_TTL) || 86400;
+import config from "./Config";
 
 export let home = function (req: Request, res: Response) {
-    res.send('SERVICE IS UP');
+    res.send(`SERVICE IS UP<br>${config.app.name} v${config.app.version}`);
 };
 
 export let mermaid = function (req: Request, res: Response) {
@@ -66,7 +63,7 @@ export let render = async function (req: Request, res: Response) {
             const currentTime = new Date();
             const diff = (currentTime.getTime() - fileCreationTime.getTime()) / 1000;
 
-            if(diff > cacheTtl) {
+            if(diff > config.cache.ttl) {
                 fs.unlinkSync(filePath);
             }
         }
@@ -107,7 +104,7 @@ export let cleanCache = async function () {
         const filePath = `${__dirname}/../cache/${file}`;
         const fileCreationTime = fs.statSync(filePath).ctime;
         const diff = (currentTime.getTime() - fileCreationTime.getTime()) / 1000;
-        if (diff > cacheTtl) {
+        if (diff > config.cache.ttl) {
             fs.unlinkSync(filePath);
             console.log(`${filePath} => expired`);
         } else {
