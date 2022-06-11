@@ -21,13 +21,28 @@ docker run -p 8087:8087 lukasss93/saas-mermaid
 
 Send a <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> or <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> request to `http://localhost:8087/render` endpoint with the following parameters:
 
-| Query Parameter | Available in                                                                                   | Default | Allowed values      | Description                                                                     |
-|-----------------|------------------------------------------------------------------------------------------------|---------|---------------------|---------------------------------------------------------------------------------|
-| text            | ![GET](https://img.shields.io/badge/-GET-blue)                                                 |         |                     | Chart text (⚠️ it must be an url encoded text)                                  |
-| background      | ![GET](https://img.shields.io/badge/-GET-blue) ![POST](https://img.shields.io/badge/-POST-red) | `true`  | `true`, `false`     | Optional. Enable/disable the white background (not available when `format=jpg`) |
-| format          | ![GET](https://img.shields.io/badge/-GET-blue) ![POST](https://img.shields.io/badge/-POST-red) | `svg`   | `svg`, `png`, `jpg` | Optional. Change the output image format                                        |
+To send your chart **text** use:
+- `text` query string parameter when using <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> method 
+- plain text body when using <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> method
 
-⚠️ When using the <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> method, you need to send the **chart text** as plain body. 
+To remove the **background** use:
+- `background=false` query string parameter. Optional. Default is `true`
+
+To change the **format** append `.<format>` to the end of the url where `<format>` is one of the following:
+- `svg`
+- `png`
+- `jpg`
+
+Optional. Default is `svg`
+
+### ⚡ Examples
+- `http://localhost:8087/render?text=graph%20TD;A-->B;B-->C;C-->A`
+- `http://localhost:8087/render?text=graph%20TD;A-->B;B-->C;C-->A&background=false`
+- `http://localhost:8087/render.svg?text=graph%20TD;A-->B;B-->C;C-->A`
+- `http://localhost:8087/render.svg?text=graph%20TD;A-->B;B-->C;C-->A&background=false`
+- `http://localhost:8087/render.png?text=graph%20TD;A-->B;B-->C;C-->A`
+- `http://localhost:8087/render.png?text=graph%20TD;A-->B;B-->C;C-->A&background=false`
+- `http://localhost:8087/render.jpg?text=graph%20TD;A-->B;B-->C;C-->A`
 
 ### 📊 Diagram Syntax
 The chart text must be a valid Mermaid diagram.<br/>
