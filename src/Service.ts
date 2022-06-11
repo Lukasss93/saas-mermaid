@@ -20,16 +20,22 @@ export let mermaid = function (req: Request, res: Response) {
 
 export let generate = async function (req: Request, res: Response) {
     try {
-        const data: string = req.body.trim();
-
-        //check if data is an empty value
-        if (data === '' || data === null || data === undefined) {
-            res.status(422).send('No data provided');
-            return;
+        //get text from request
+        let text: string|undefined;
+        
+        if(req.method === 'GET'){
+            text = String(req?.query?.text || '').trim();
+        } else {
+            text = req.body.trim();
+        }
+        
+        //check if text is an empty value
+        if (text === '' || text === null || text === undefined) {
+            throw new Error('No text provided');
         }
 
         //initialize mermaid tools
-        const mermaider = new Mermaider(data);
+        const mermaider = new Mermaider(text);
 
         //enable/disable background
         const background: boolean = req.query.background !== 'false';
@@ -43,8 +49,8 @@ export let generate = async function (req: Request, res: Response) {
         }
         mermaider.setFormat(format.extension);
         
-        //generate md5 from data
-        const hash = md5(data+background+ext);
+        //generate md5 from text
+        const hash = md5(text+background+ext);
 
         //check if file exists
         const filePath = `${__dirname}/../cache/${hash}`;
