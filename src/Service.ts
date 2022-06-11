@@ -42,7 +42,7 @@ export let render = async function (req: Request, res: Response) {
         mermaider.setBackground(background);
         
         //set format
-        const ext: string = String(req.query.format || 'svg').toLowerCase();
+        const ext: string = String(req.params.ext || 'svg').toLowerCase();
         const format:MermaidFormat|undefined = formats.find(x => x.extension === ext);
         if (format === undefined) {
             throw new Error(`Format ${ext} is not supported`);

@@ -7,7 +7,7 @@ router.get('/', Service.home);
 
 router.get('/mermaid', Service.mermaid);
 
-router.get('/render', Service.render);
-router.post('/render', Service.render);
+router.get('/render(\.:ext)?', Service.render);
+router.post('/render(\.:ext)?', Service.render);
 
 export default router;
