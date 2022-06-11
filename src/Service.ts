@@ -18,7 +18,7 @@ export let mermaid = function (req: Request, res: Response) {
         .send(fs.readFileSync(`${__dirname}/mermaid.min.js`));
 };
 
-export let generate = async function (req: Request, res: Response) {
+export let render = async function (req: Request, res: Response) {
     try {
         //get text from request
         let text: string|undefined;
