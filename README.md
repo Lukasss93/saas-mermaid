@@ -19,8 +19,9 @@ docker run -p 8087:8087 lukasss93/saas-mermaid
 
 ## 👓 Usage
 
-Send a <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> or <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> request to `http://localhost:8087/render` endpoint with the following parameters:
+Send a <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> or <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> request to `http://localhost:8087/render` endpoint.
 
+#### Input
 To send your chart **text** use:
 - `text` query string parameter when using <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> method 
 - plain text body when using <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> method
@@ -34,6 +35,13 @@ To change the **format** append `.<format>` to the end of the url where `<format
 - `jpg`
 
 Optional. Default is `svg`
+
+#### Output
+The response will be a **png**, **jpg**, **svg** image.
+You can use the **X-Hash** header to:
+- check if the image is up to date
+- get the image from the cache with <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> route: `http://localhost:8087/cached/<X-Hash>`
+
 
 ### ⚡ Examples
 - `http://localhost:8087/render?text=graph%20TD;A-->B;B-->C;C-->A`
