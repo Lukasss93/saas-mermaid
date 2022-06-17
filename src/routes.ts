@@ -10,4 +10,6 @@ router.get('/mermaid', Service.mermaid);
 router.get('/render(\.:ext)?', Service.render);
 router.post('/render(\.:ext)?', Service.render);
 
+router.get('/cached/(:hash\.:ext)', Service.cached);
+
 export default router;

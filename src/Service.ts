@@ -40,17 +40,20 @@ export let render = async function (req: Request, res: Response) {
         
         //set format
         const ext: string = String(req.params.ext || 'svg').toLowerCase();
-        const format:MermaidFormat|undefined = formats.find(x => x.extension === ext);
+        const format: MermaidFormat | undefined = formats.find(x => x.extension === ext);
         if (format === undefined) {
             throw new Error(`Format ${ext} is not supported`);
         }
         mermaider.setFormat(format.extension);
-        
-        //generate md5 from text
-        const hash = md5(text+background+ext);
 
-        //check if file exists
-        const filePath = `${__dirname}/../cache/${hash}`;
+        //generate md5 from text
+        const hash = md5(text + background + ext);
+
+        //build file name
+        const fileName = `${hash}.${ext}`;
+
+        //build file path
+        const filePath = `${__dirname}/../cache/${fileName}`;
 
         //create cache directory if it doesn't exist
         if (!fs.existsSync(`${__dirname}/../cache`)) {
@@ -80,7 +83,7 @@ export let render = async function (req: Request, res: Response) {
         res
             .status(200)
             .type(format.mime)
-            .setHeader('X-Hash', hash)
+            .setHeader('X-Hash', `${fileName}`)
             .send(file);
         
     } catch (e: any) {
@@ -113,4 +116,37 @@ export let cleanCache = async function () {
     });
 
     console.log('Cache cleaned');
+};
+
+export let cached = async function (req: Request, res: Response) {
+
+    //get parameters
+    const hash: string = String(req.params.hash).toLowerCase();
+    const ext: string = String(req.params.ext || 'svg').toLowerCase();
+
+    //build file path
+    const filePath = `${__dirname}/../cache/${hash}.${ext}`;
+
+    //if file not exists, return 404
+    if (!fs.existsSync(filePath)) {
+        res.status(404).send('Not found');
+        return;
+    }
+
+    //calc mime
+    const format: MermaidFormat | undefined = formats.find(x => x.extension === ext);
+    if (format === undefined) {
+        res.status(404).send('Not found');
+        return;
+    }
+
+    //read file
+    const file = fs.readFileSync(filePath);
+
+    //send response
+    res
+        .status(200)
+        .type(format.mime)
+        .setHeader('X-Hash', `${hash}.${ext}`)
+        .send(file);
 };
