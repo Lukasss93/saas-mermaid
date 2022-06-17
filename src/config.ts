@@ -1,10 +1,11 @@
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const config = {
     app: {
         name: 'saas-mermaid',
-        version: '1.5',
+        version: '1.6',
     },
     
     server: {
