@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.7](https://github.com/Lukasss93/saas-mermaid/releases/tag/v1.7) - 2022-06-18
+
+### Added
+
+- Added X-Width and X-Height headers to the `/render` response to provide information about the image width and height.
+
+
 ## [v1.6](https://github.com/Lukasss93/saas-mermaid/releases/tag/v1.6) - 2022-06-17
 
 ### Added
