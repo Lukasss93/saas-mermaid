@@ -38,10 +38,12 @@ Optional. Default is `svg`
 
 #### Output
 The response will be a **png**, **jpg**, **svg** image.
+
 You can use the **X-Hash** header to:
 - check if the image is up to date
 - get the image from the cache with <img src="https://img.shields.io/badge/-GET-blue" style="height:16px;"/> route: `http://localhost:8087/cached/<X-Hash>`
 
+You can get the image width and height with the **X-Width** and **X-Height** headers.
 
 ### ⚡ Examples
 - `http://localhost:8087/render?text=graph%20TD;A-->B;B-->C;C-->A`

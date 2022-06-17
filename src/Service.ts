@@ -4,6 +4,7 @@ import md5 from "md5";
 import Mermaider from "./Mermaider";
 import {formats, MermaidFormat} from "./Formats";
 import config from "./config";
+import probe from "probe-image-size";
 
 export let home = function (req: Request, res: Response) {
     res.send(`SERVICE IS UP<br>${config.app.name} v${config.app.version}`);
@@ -78,12 +79,19 @@ export let render = async function (req: Request, res: Response) {
 
         //read file
         const file = fs.readFileSync(filePath);
-
+        
+        //get image size
+        let fileProbe = probe.sync(file);
+        let fileWidth = Math.ceil(fileProbe?.width ?? 0);
+        let fileHeight = Math.ceil(fileProbe?.height ?? 0);
+        
         //send response
         res
             .status(200)
             .type(format.mime)
             .setHeader('X-Hash', `${fileName}`)
+            .setHeader('X-Width', `${fileWidth}`)
+            .setHeader('X-Height', `${fileHeight}`)
             .send(file);
         
     } catch (e: any) {
@@ -147,6 +155,5 @@ export let cached = async function (req: Request, res: Response) {
     res
         .status(200)
         .type(format.mime)
-        .setHeader('X-Hash', `${hash}.${ext}`)
         .send(file);
 };
