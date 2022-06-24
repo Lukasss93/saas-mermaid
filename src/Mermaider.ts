@@ -69,7 +69,13 @@ export default class Mermaider {
 
     protected async init(script, ...args) {
         let response: any = null;
-        let browser = await puppeteer.launch({args: ["--no-sandbox"]});
+        let browser = await puppeteer.launch({args: [
+                '--headless',
+                '--no-sandbox',
+                "--disable-gpu",
+                "--single-process",
+                "--no-zygote",
+            ]});
 
         try {
             //load mermaid
