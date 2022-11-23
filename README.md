@@ -27,7 +27,7 @@ To send your chart **text** use:
 - plain text body when using <img src="https://img.shields.io/badge/-POST-red" style="height:16px;"/> method
 
 To remove the **background** use:
-- `background=false` query string parameter. Optional. Default is `true`
+- `background=transparent` query string parameter. Optional. Default is `white`
 
 To change the **format** append `.<format>` to the end of the url where `<format>` is one of the following:
 - `svg`
