@@ -91,14 +91,29 @@ export default class Mermaider {
             //get canvas size
             let regex = /viewBox="(?<x>-?\d+\.?\d*) (?<y>-?\d+\.?\d*) (?<w>\d+\.?\d*) (?<h>\d+\.?\d*)"/;
             let match = regex.exec(response);
-            let w = Math.ceil(Number(match?.groups?.w || 0));
-            let h = Math.ceil(Number(match?.groups?.h || 0));
+            let x = Math.ceil(Number(match?.groups?.x));
+            let y = Math.ceil(Number(match?.groups?.y));
+            let w = Math.ceil(Number(match?.groups?.w));
+            let h = Math.ceil(Number(match?.groups?.h));
             let offsetX = 0;
             let offsetY = 0;
 
             //get chart type
             if (this.getChartType() === 'gitGraph') {
                 offsetX = 40;
+            }
+
+            //change w and h to min 500px + keep aspect ratio
+            if (w < 500) {
+                let ratio = w / h;
+                w = 500;
+                h = Math.ceil(w / ratio);
+            }
+
+            if (h < 500) {
+                let ratio = w / h;
+                h = 500;
+                w = Math.ceil(h * ratio);
             }
 
             //convert svg if needed
@@ -111,6 +126,14 @@ export default class Mermaider {
                     type: this.format === 'jpg' ? 'jpeg' : 'png',
                     omitBackground: this.background === 'transparent',
                 });
+            } else {
+                //replace viewBox size and style max-width
+                let regex = /<svg viewBox="(?<x>-?\d+\.?\d*) (?<y>-?\d+\.?\d*) (?<w>\d+\.?\d*) (?<h>\d+\.?\d*)" style="max-width: (?<mw>\d+\.?\d*)(px)?;"/;
+                let x = Math.ceil(Number(match?.groups?.x));
+                let y = Math.ceil(Number(match?.groups?.y));
+                let w = Math.ceil(Number(match?.groups?.w));
+                let h = Math.ceil(Number(match?.groups?.h));
+                response = response.replace(regex, `<svg viewBox="${x} ${y} ${w} ${h}" style="max-width: ${w}px;"`);
             }
 
             //close browser
