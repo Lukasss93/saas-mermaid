@@ -80,8 +80,9 @@ export default class Mermaider {
         try {
             //load mermaid
             let renderPage = await browser.newPage();
+            const mermaidUrl = `http://localhost:${config.server.port}/mermaid`;
             await renderPage.goto(
-                `data:text/html,<script src="http://localhost:${config.server.port}/mermaid"></script>`
+                `data:text/html,<script src="${mermaidUrl}"></script>`
             );
 
             //render svg
