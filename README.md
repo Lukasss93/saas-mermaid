@@ -54,6 +54,9 @@ You can get the image width and height with the **X-Width** and **X-Height** hea
 - `http://localhost:8087/render.png?text=graph%20TD;A-->B;B-->C;C-->A&background=false`
 - `http://localhost:8087/render.jpg?text=graph%20TD;A-->B;B-->C;C-->A`
 
+### ⚠️ Warning
+Font Awesome icons are not supported at the moment.
+
 ### 📊 Diagram Syntax
 The chart text must be a valid Mermaid diagram.<br/>
 More info here: https://mermaid-js.github.io/mermaid/
