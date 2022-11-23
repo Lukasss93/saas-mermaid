@@ -5,7 +5,7 @@ dotenv.config();
 const config = {
     app: {
         name: 'saas-mermaid',
-        version: '1.7.1',
+        version: '1.8.0',
     },
     
     server: {

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.8.0](https://github.com/Lukasss93/saas-mermaid/releases/tag/v1.8.0) - 2022-11-24
+
+### Changed
+- Updated MermaidJS version to 9.2.2
+- Changed background type from boolean to string
+
+### Fixed
+- Fixed min image size
+
 ## [v1.7.1](https://github.com/Lukasss93/saas-mermaid/releases/tag/v1.7.1) - 2022-06-24
 
 ### Fixed
