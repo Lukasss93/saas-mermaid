@@ -134,8 +134,8 @@ export default class Mermaider {
                 // @ts-ignore
                 let result: string = window.mermaid.mermaidAPI.render('id1', text);
 
-                //set background
-                result = result.replace('<style>', `<style>#id1{background:${background};} `);
+                //set background + fix viewport width
+                result = result.replace('<style>', `<style>#id1{background:${background};min-width: 100%;} `);
 
                 return result;
             }, this.text, this.mermaidConfig, this.background);
