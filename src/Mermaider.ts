@@ -6,17 +6,17 @@ import config from "./config";
 export default class Mermaider {
     protected text: string;
     protected mermaidConfig: any;
-    protected background: boolean;
+    protected background: string;
     protected format: AllowedFormats;
 
     constructor(text: string) {
         this.text = text;
         this.mermaidConfig = {};
-        this.background = true;
+        this.background = 'white';
         this.format = 'svg';
     }
 
-    public setBackground(background: boolean): Mermaider {
+    public setBackground(background: string): Mermaider {
         this.background = background;
         return this;
     }
@@ -109,7 +109,7 @@ export default class Mermaider {
                 response = await conversionPage.screenshot({
                     ...(this.format !== 'png' ? {quality: 100} : {}),
                     type: this.format === 'jpg' ? 'jpeg' : 'png',
-                    omitBackground: !this.background
+                    omitBackground: this.background === 'transparent',
                 });
             }
 
@@ -134,9 +134,8 @@ export default class Mermaider {
                 // @ts-ignore
                 let result: string = window.mermaid.mermaidAPI.render('id1', text);
 
-                if (background) {
-                    result = result.replace('<style>', '<style>#id1{background:white;} ');
-                }
+                //set background
+                result = result.replace('<style>', `<style>#id1{background:${background};} `);
 
                 return result;
             }, this.text, this.mermaidConfig, this.background);

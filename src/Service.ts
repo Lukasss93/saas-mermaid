@@ -36,7 +36,7 @@ export let render = async function (req: Request, res: Response) {
         const mermaider = new Mermaider(text);
 
         //enable/disable background
-        const background: boolean = req.query.background !== 'false';
+        const background: string = String(req?.query?.background || 'white').toLowerCase();
         mermaider.setBackground(background);
         
         //set format
